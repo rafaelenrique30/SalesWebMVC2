@@ -31,6 +31,16 @@ namespace SalesWebMvc.Models
             Department = department;
         }
 
+
+        public Seller(string name, string email, DateTime birthDate, double baseSalary, Department department)
+        {
+            Name = name;
+            Email = email;
+            BirthDate = birthDate;
+            BaseSalary = baseSalary;
+            Department = department;
+        }
+
         public void AddSales(SalesRecord sr)
         {
             Sales.Add(sr);

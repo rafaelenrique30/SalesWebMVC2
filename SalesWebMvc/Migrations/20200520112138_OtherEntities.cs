@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using SalesWebMvc.Models;
 
 namespace SalesWebMvc.Migrations
 {
@@ -73,6 +74,9 @@ namespace SalesWebMvc.Migrations
                 name: "IX_Seller_DepartmentId",
                 table: "Seller",
                 column: "DepartmentId");
+
+            
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -82,6 +86,7 @@ namespace SalesWebMvc.Migrations
 
             migrationBuilder.DropTable(
                 name: "Seller");
+
         }
     }
 }
