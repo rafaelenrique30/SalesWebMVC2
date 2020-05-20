@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Services
 {
@@ -36,6 +37,22 @@ namespace SalesWebMvc.Services
             var obj = _context.Seller.Find(id);
             _context.Seller.Remove(obj); // Removeu o objeto no framework, a seguir irá confirmar no banco para remover o registro
             _context.SaveChanges();
+        }
+
+        public void Update(Seller obj)
+        {
+            if(!_context.Seller.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id not fount");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }catch(DbUpdateConcurrencyException e) //Interceptando uma excessão de nível de acesso a dados e transformando em excessão de nível de serviço
+            {
+                throw new DbConcurrencyException(e.Message); //Excessão a nível de serviço
+            }
         }
     }
 }
