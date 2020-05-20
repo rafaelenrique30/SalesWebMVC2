@@ -39,6 +39,12 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken] //Evita invasões da seção
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departmentss = _departmentService.FindAll();
+                var viewModell = new SellerFormViewModel { Seller = seller, Departments = departmentss };
+                return View(viewModell);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -78,8 +84,14 @@ namespace SalesWebMvc.Controllers
             return View(obj);
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id, Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departmentss = _departmentService.FindAll();
+                var viewModell = new SellerFormViewModel { Seller = seller, Departments = departmentss };
+                return View(viewModell);
+            }
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
